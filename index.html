@@ -44,7 +44,7 @@
                 // }
                 let text = '<br>';
                 for (const key of Object.keys(jsonData.definitions[0])) {
-                    text += `${key}: ${jsonData.definitions[0][key]}<br>`;
+                    text += `<b>${key}:</b> ${jsonData.definitions[0][key]}<br>`;
                 }
                 document.querySelector('#definition').innerHTML = `${text}`;
             });
