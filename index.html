@@ -4,13 +4,21 @@
     </head>
     <body>
         <label for="lookupWord">Word: </label><input id="lookupWord" type="text" />
-        <button onclick="lookupWord()">Lookup</button>
+        <button id="lookupButton" onclick="lookupWord()">Lookup</button>
         <div id="word"></div>
         <div id="definition"></div>
 
     </body>
     <script>
-        lookupWord('cat')
+        let t = document.getElementById('lookupWord').addEventListener("keyup", function(event) {
+            // Number 13 is the "Enter" key on the keyboard
+            if (event.code === 'Enter') {
+                // Cancel the default action, if needed
+                event.preventDefault();
+                // Trigger the button element with a click
+                document.getElementById("lookupButton").click();
+            }
+        });
         function lookupWord() {
             const word = document.querySelector('#lookupWord').value;
             const request = new Request(`https://owlbot.info/api/v4/dictionary/${word}`, {
