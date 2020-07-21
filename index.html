@@ -1,10 +1,46 @@
 <html>
     <head>
         <title></title>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0-0/axios.min.js" integrity="sha512-mPPsSGy0P9Lvp6mRQUUV9RhSM58XNlJZkSS/l5dCGxcb+t/d8j69yGMfzjqhq32TNqC29FcCWBNeuAnFtrQLHg==" crossorigin="anonymous"></script>
-
     </head>
     <body>
-        Hello there :-)
+        <label for="lookupWord">Word: </label><input id="lookupWord" type="text" />
+        <button onclick="lookupWord()">Lookup</button>
+        <div id="word"></div>
+        <div id="definition"></div>
+
     </body>
+    <script>
+        lookupWord('cat')
+        function lookupWord() {
+            const word = document.querySelector('#lookupWord').value;
+            const request = new Request(`https://owlbot.info/api/v4/dictionary/${word}`, {
+                headers: new Headers({
+                    'Authorization': 'Token 0b6c20b716d1bfafc4a73911ecfdc5e5932116bc'
+                })
+            })
+            fetch(request).then(response => {
+                return response.json();
+            }).then(jsonData => {
+                // {
+                //     "pronunciation": "oul",
+                //     "word": "owl",
+                //     "definitions": [
+                //     {
+                //         "type": "noun",
+                //         "definition": "a nocturnal bird of prey with large eyes, a facial disc, a hooked beak, and typically a loud hooting call.",
+                //         "example": "I love reaching out into that absolute silence, when you can hear the owl or the wind.",
+                //         "image_url": "https://media.owlbot.info/dictionary/images/owl.jpg.400x400_q85_box-403,83,960,640_crop_detail.jpg",
+                //         "emoji": "🦉"
+                //     }
+                // ]
+                // }
+                let text = '';
+                for (const key of Object.keys(jsonData.definitions[0])) {
+                    text += `${key}: ${jsonData.definitions[0][key]}\n`;
+                }
+                document.querySelector('#definition').innerHTML = `<pre>${text}</pre>`;
+            });
+        }
+
+    </script>
 </html>
