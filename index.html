@@ -1,54 +1,9 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <title></title>
-    </head>
-    <body>
-        <label for="lookupWord">Word: </label><input id="lookupWord" type="text" />
-        <button id="lookupButton" onclick="lookupWord()">Lookup</button>
-        <div id="word"></div>
-        <div id="definition"></div>
-
-    </body>
-    <script>
-        document.getElementById('lookupWord').addEventListener("keyup", function(event) {
-            // Number 13 is the "Enter" key on the keyboard
-            if (event.code === 'Enter') {
-                // Cancel the default action, if needed
-                event.preventDefault();
-                // Trigger the button element with a click
-                document.getElementById("lookupButton").click();
-            }
-        });
-        function lookupWord() {
-            const word = document.querySelector('#lookupWord').value;
-            const request = new Request(`https://owlbot.info/api/v4/dictionary/${word}`, {
-                headers: new Headers({
-                    'Authorization': 'Token 0b6c20b716d1bfafc4a73911ecfdc5e5932116bc'
-                })
-            })
-            fetch(request).then(response => {
-                return response.json();
-            }).then(jsonData => {
-                // {
-                //     "pronunciation": "oul",
-                //     "word": "owl",
-                //     "definitions": [
-                //     {
-                //         "type": "noun",
-                //         "definition": "a nocturnal bird of prey with large eyes, a facial disc, a hooked beak, and typically a loud hooting call.",
-                //         "example": "I love reaching out into that absolute silence, when you can hear the owl or the wind.",
-                //         "image_url": "https://media.owlbot.info/dictionary/images/owl.jpg.400x400_q85_box-403,83,960,640_crop_detail.jpg",
-                //         "emoji": "🦉"
-                //     }
-                // ]
-                // }
-                let text = '<br>';
-                for (const key of Object.keys(jsonData.definitions[0])) {
-                    text += `<b>${key}:</b> ${jsonData.definitions[0][key]}<br>`;
-                }
-                document.querySelector('#definition').innerHTML = `${text}`;
-            });
-        }
-
-    </script>
+<head>
+  <title>Your Title Goes Here</title>
+</head>
+<body>
+  <img src="img/splash.jpg" style="width:100%; height:100%;">
+</body>
 </html>
